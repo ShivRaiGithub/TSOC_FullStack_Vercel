@@ -61,6 +61,7 @@ async function seed() {
   }
 }
 
+
 /** @type {import('./$types').Actions} */
 export const actions = {
 	
@@ -75,10 +76,28 @@ export const actions = {
   //   const updateUser = await client.sql`
   //   UPDATE names
   //   SET email = ${email}, name = ${name}
-  //   WHERE     ;`
+  //   WHERE id = ${user.id};`
 	
 	// 	return { success: true };
 	// },
+
+  update: async ({ request }) => {
+    const req = await request.formData();
+    const db = createPool({ connectionString: POSTGRES_URL })
+
+    const id = req.get('id');
+    const name = req.get('name');
+    const email = req.get('email');
+
+    try {
+      console.log('user', id);
+      const client = await db.connect();
+      const result = await client.sql`UPDATE names SET name = ${name}, email = ${email} WHERE id = ${id}`
+      { success: true }
+    } catch (error) {
+        console.log(error)
+    }
+	},
 
   delete: async ({ request }) => {
     const data = await request.formData();

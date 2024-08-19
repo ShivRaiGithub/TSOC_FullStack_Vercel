@@ -143,6 +143,10 @@ export let form;
   {#if form?.success}
     <!-- this message is ephemeral; it exists because the page was rendered in
 		   response to a form submission. it will vanish if the user reloads -->
-    <p class="pt-2">The payment was successful. Here is your <a href="https://whatsonchain.com/tx/{form?.payment}">transaction</a>!</p>
+       <p class="font-semibold text-black-600 mt-10">
+        The payment was successful, <a target="_blank" class="text-indigo-500 font-semibold underline" href={`https://whatsonchain.com/tx/${form?.payResponse}`}
+          >Transaction link</a
+        >
+      </p>
   {/if}
 </div>
